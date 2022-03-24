@@ -1,12 +1,11 @@
-import React from 'react';
-import CartItem from '../CartItem';
-import Auth from '../../utils/auth';
-import './style.css';
-import { useStoreContext } from '../../utils/GlobalState';
-import { TOGGLE_CART } from '../../utils/actions';
+import React from "react";
+import CartItem from "../CartItem";
+import Auth from "../../utils/auth";
+import { useStoreContext } from "../../utils/GlobalState";
+import { TOGGLE_CART } from "../../utils/actions";
+import "./style.css";
 
 const Cart = () => {
-  
   const [state, dispatch] = useStoreContext();
 
   function toggleCart() {
@@ -20,7 +19,6 @@ const Cart = () => {
     });
     return sum.toFixed(2);
   }
-  
 
   if (!state.cartOpen) {
     return (
@@ -30,8 +28,8 @@ const Cart = () => {
           aria-label="trash">🛒</span>
       </div>
     );
-  }  
-  
+  }
+
   return (
     <div className="cart">
       <div className="close" onClick={toggleCart}>[close]</div>
@@ -41,26 +39,28 @@ const Cart = () => {
           {state.cart.map(item => (
             <CartItem key={item._id} item={item} />
           ))}
+
           <div className="flex-row space-between">
             <strong>Total: ${calculateTotal()}</strong>
+
             {
               Auth.loggedIn() ?
                 <button>
                   Checkout
-                </button>
+              </button>
                 :
                 <span>(log in to check out)</span>
             }
           </div>
         </div>
       ) : (
-        <h3>
-          <span role="img" aria-label="shocked">
-            😱
+          <h3>
+            <span role="img" aria-label="shocked">
+              😱
           </span>
           You haven't added anything to your cart yet!
-        </h3>
-      )}
+          </h3>
+        )}
     </div>
   );
 };
